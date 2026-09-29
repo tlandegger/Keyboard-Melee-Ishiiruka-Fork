@@ -1,3 +1,46 @@
+# Ishiiruka fork: rectangle keyboard controller (proof of concept)
+
+> **This is an unofficial fork of [project-slippi/Ishiiruka](https://github.com/project-slippi/Ishiiruka).**
+> It is a proof of concept and is not affiliated with or endorsed by Project Slippi. For normal play,
+> use the official [Slippi](https://slippi.gg) releases.
+
+This fork adds a keyboard-driven "rectangle" (B0XX-style) GameCube controller that follows the
+[Melee Controller Ruleset](https://docs.google.com/document/d/1abMqoatAGh_ZhQD1qJaQx6YqFAppCjU5KyF3mgvDQVw)
+for controllers that replace the control stick with buttons. The logic is ported from the
+ruleset-compliant [HayBox](https://github.com/CarVac/HayBox) firmware and includes:
+
+* Neutral SOCD on both axes.
+* Travel time simulation: about 6-8 ms to rim cardinals and diagonals, 12 ms otherwise.
+* Output fuzzing (1 unit, 25/50/25).
+* The L/R 27 degree angle lockout.
+* Timing lockouts for burst SDI, crouch to up-tilt, pivot tilts and diagonal dash pivot tilts.
+* The ruleset-compliant modifier coordinates (Mod X / Mod Y, firefox angles, angled forward smash).
+
+The default keyboard bindings follow the community B0XX keyboard layout used by
+[b0xx-ahk](https://github.com/agirardeau/b0xx-ahk). See [docs/RectangleKeyboard.md](docs/RectangleKeyboard.md)
+for the key map and settings.
+
+### Status
+
+This is a proof of concept. The ruleset logic has unit tests and matches the original HayBox firmware
+code output-for-output in a differential test, and the Windows build compiles and launches. It has
+**not** been tested in-game, and it is not an approved or officially compliant controller for tournament
+use.
+
+### Where the code is
+
+* `Source/Core/InputCommon/MeleeRectangle.{h,cpp}`: SOCD, coordinate mapping and the ruleset limiter.
+* `Source/Core/Core/HW/GCPadEmu.cpp`: the **Rectangle (Melee)** control group and default key bindings.
+* `Source/UnitTests/Core/MeleeRectangleTest.cpp`: unit tests.
+
+### License note
+
+`MeleeRectangle.{h,cpp}` contain logic ported from HayBox, which is licensed under the GNU GPL version 3.
+Those files are GPLv3, so builds of this fork are distributed under GPLv3 (the rest of Dolphin is
+GPLv2+, which permits this).
+
+---
+
 # Dolphin - A GameCube and Wii Emulator
 
 [Homepage](https://dolphin-emu.org/) | [Project Site](https://github.com/dolphin-emu/dolphin) | [Forums](https://forums.dolphin-emu.org/) | [Wiki](https://wiki.dolphin-emu.org/) | [Issue Tracker](https://bugs.dolphin-emu.org/projects/emulator/issues) | [Coding Style](https://github.com/dolphin-emu/dolphin/blob/master/Contributing.md) | [Transifex Page](https://www.transifex.com/projects/p/dolphin-emu/)
